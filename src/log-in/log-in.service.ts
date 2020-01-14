@@ -1,17 +1,20 @@
 import { LogInDTO } from './../dto/logIn.dto';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException, HttpException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { LogIn } from 'src/interfaces/logIn.interface';
 import { createHmac, createHash } from 'crypto';
 import hashKeys from 'src/configs/hash.keys';
+import { JwtService } from '@nestjs/jwt';
 // import { sign } from 'jwt';
 
 
 
 @Injectable()
 export class LogInService {
-    constructor(@InjectModel('users') private readonly logInModel: Model<LogIn>) {}
+    constructor(
+        @InjectModel('users') private readonly logInModel: Model<LogIn>, 
+        private readonly jwtService: JwtService) {}
 
     async logInLanding(){
         await this.logInModel.find({}, (err,user)=> {
@@ -32,34 +35,20 @@ export class LogInService {
 
 
         let dbRet = await this.logInModel.findOne({username:inUsername, password:inPassword})
-
+        
         if (dbRet===null) {
-            return false
+            // throw new UnauthorizedException("Invalid password")
+            throw new HttpException("Hang anak babi", 432)
         } else {
-            return true
+            const payload = {subject: dbRet._id}
+            return {
+                token: this.jwtService.sign(payload)
+            }
         }
-
-
-
     }
 
 
     async addItem() {
-        // const newItem = new this.logInModel({username:'mighty', password:'number9'})
-        // newItem.save()
-        // console.log("ahyuck")
-
-        const secret = '55times'
-        // const hash = createHmac('sha256', secret)
-        const hash = createHash('sha256')
-        .update(secret)
-        .digest('hex')
-
-        console.log(hash)
-    }
-
-    tokenGenerator() {
-
     }
 
 }

@@ -1,6 +1,6 @@
 import { LogInDTO } from './../dto/logIn.dto';
 import { LogInService } from './log-in.service';
-import { Controller, Get, Post, Body, HttpCode, Res, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, HttpCode, Res, HttpStatus, Header } from '@nestjs/common';
 
 @Controller('login')
 export class LogInController {
@@ -18,15 +18,16 @@ export class LogInController {
 
     @Post() 
     @HttpCode(200)
+    // @Header('Access-Control-Allow-Origin','*')
     async logInAttempt(@Body() logInDTO: LogInDTO) {
         let x = await this.logInService.logInAttempt(logInDTO)
-        if (x===true) {
-            console.log('It workes')
-            return ("It works")
-        } else {
-            console.log('It doest work')
-            return ("Its fucked")
-        }
+
+        return x
+        // if (x===null) {
+        //     //figure out how to return an error?
+        // } else {
+        //     return x
+        // }
 
     }
 }
