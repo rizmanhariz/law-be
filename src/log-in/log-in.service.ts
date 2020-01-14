@@ -4,7 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { LogIn } from 'src/interfaces/logIn.interface';
 import { createHmac, createHash } from 'crypto';
-import hashKeys from 'src/configs/hashKeys';
+import hashKeys from 'src/configs/hash.keys';
 // import { sign } from 'jwt';
 
 
