@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 import { LogIn } from 'src/interfaces/logIn.interface';
 import { createHmac, createHash } from 'crypto';
 import hashKeys from 'src/configs/hashKeys';
-import { sign } from 'jwt';
+// import { sign } from 'jwt';
 
 
 
