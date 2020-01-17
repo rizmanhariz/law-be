@@ -37,8 +37,8 @@ export class LogInService {
         let dbRet = await this.logInModel.findOne({username:inUsername, password:inPassword})
         
         if (dbRet===null) {
-            // throw new UnauthorizedException("Invalid password")
-            throw new HttpException("Hang anak babi", 432)
+            throw new UnauthorizedException("Invalid password")
+            // throw new HttpException("Your text message here", 432)
         } else {
             const payload = {subject: dbRet._id}
             return {
