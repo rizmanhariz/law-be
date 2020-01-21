@@ -23,11 +23,5 @@ export class LogInController {
         let x = await this.logInService.logInAttempt(logInDTO)
 
         return x
-        // if (x===null) {
-        //     //figure out how to return an error?
-        // } else {
-        //     return x
-        // }
-
     }
 }
